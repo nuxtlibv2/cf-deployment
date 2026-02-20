@@ -49,5 +49,8 @@ export function getHeaderBlock(appName: string): string {
 name = "${escapeTomlString(appName)}"
 main = ".output/server/index.mjs"
 compatibility_date = "${DEFAULT_COMPATIBILITY_DATE}"
+
+[assets]
+directory = ".output/public"
 `.trim()
 }

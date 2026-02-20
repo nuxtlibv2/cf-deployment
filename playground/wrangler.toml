@@ -5,6 +5,9 @@ name = "my-pretty-application"
 main = ".output/server/index.mjs"
 compatibility_date = "2025-12-01"
 
+[assets]
+directory = ".output/public"
+
 # One block is generated for each item in `cfDeployment.environments`.
 
 # Branch: main
