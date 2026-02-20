@@ -5,5 +5,8 @@ name = "my-nuxt-app"
 main = ".output/server/index.mjs"
 compatibility_date = "2025-12-01"
 
+[assets]
+directory = ".output/public"
+
 # No environments found yet, so a default route is used.
 routes = [{ pattern = "app.example.com", custom_domain = true }]

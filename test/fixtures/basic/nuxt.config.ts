@@ -4,4 +4,7 @@ export default defineNuxtConfig({
   modules: [
     MyModule,
   ],
+  nitro: {
+    preset: 'node-server',
+  },
 })

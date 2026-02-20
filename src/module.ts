@@ -24,7 +24,7 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     const logger = useLogger('@nuxtlib/cf-deployment')
     nuxt.options.nitro ||= {}
-    nuxt.options.nitro.preset = 'cloudflare_module'
+    nuxt.options.nitro.preset ||= 'cloudflare_module'
 
     const wranglerPath = resolve(nuxt.options.rootDir, 'wrangler.toml')
     const workflowPath = resolve(nuxt.options.rootDir, DEFAULT_WORKFLOW_PATH)
