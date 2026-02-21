@@ -1,6 +1,6 @@
 {
   "name": "@nuxtlib/cf-deployment",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A Nuxt module for Cloudflare Workers deployment with GitHub Actions integration.",
   "repository": "https://github.com/nuxtlibv2/cf-deployment",
   "license": "MIT",
