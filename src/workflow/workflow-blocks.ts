@@ -56,59 +56,51 @@ export function getBuildStepsBlock(
   packageManager: WorkflowPackageManager,
   nodeVersion: string,
 ): string {
-  if (packageManager === 'pnpm') {
-    return [
-      '      - name: Install pnpm',
-      '        uses: pnpm/action-setup@v4',
-      '        with:',
-      '          version: 10',
-      '',
-      '      - name: Setup Node',
-      '        uses: actions/setup-node@v4',
-      '        with:',
-      `          node-version: ${nodeVersion}`,
-      '          cache: pnpm',
-      '          cache-dependency-path: pnpm-lock.yaml',
-      '',
-      '      - name: Install deps',
-      '        run: pnpm install --frozen-lockfile',
-      '',
-      '      - name: Build Nuxt app',
-      '        run: pnpm run build',
-    ].join('\n')
-  }
+  const cacheDependencyPath = packageManager === 'pnpm'
+    ? 'pnpm-lock.yaml'
+    : packageManager === 'yarn'
+      ? 'yarn.lock'
+      : 'package-lock.json'
 
-  if (packageManager === 'yarn') {
-    return [
-      '      - name: Setup Node',
-      '        uses: actions/setup-node@v4',
-      '        with:',
-      `          node-version: ${nodeVersion}`,
-      '          cache: yarn',
-      '          cache-dependency-path: yarn.lock',
-      '',
-      '      - name: Install deps',
-      '        run: yarn install --frozen-lockfile',
-      '',
-      '      - name: Build Nuxt app',
-      '        run: yarn build',
-    ].join('\n')
-  }
+  const installCommand = packageManager === 'pnpm'
+    ? 'pnpm install --frozen-lockfile'
+    : packageManager === 'yarn'
+      ? 'yarn install --frozen-lockfile'
+      : 'npm ci'
 
-  return [
+  const buildCommand = packageManager === 'pnpm'
+    ? 'pnpm run build'
+    : packageManager === 'yarn'
+      ? 'yarn build'
+      : 'npm run build'
+
+  const lines = [
     '      - name: Setup Node',
     '        uses: actions/setup-node@v4',
     '        with:',
     `          node-version: ${nodeVersion}`,
-    '          cache: npm',
-    '          cache-dependency-path: package-lock.json',
+    `          cache: ${packageManager}`,
+    `          cache-dependency-path: ${cacheDependencyPath}`,
     '',
+  ]
+
+  if (packageManager !== 'npm') {
+    lines.push(
+      '      - name: Enable Corepack',
+      '        run: corepack enable',
+      '',
+    )
+  }
+
+  lines.push(
     '      - name: Install deps',
-    '        run: npm ci',
+    `        run: ${installCommand}`,
     '',
     '      - name: Build Nuxt app',
-    '        run: npm run build',
-  ].join('\n')
+    `        run: ${buildCommand}`,
+  )
+
+  return lines.join('\n')
 }
 
 // This helper is here to map package manager choice to the wrangler deploy command.

@@ -28,7 +28,9 @@ describe('renderWorkflowYaml', () => {
     expect(output).toContain('      - main')
     expect(output).toContain('      - feature-1')
 
-    expect(output).toContain('uses: pnpm/action-setup@v4')
+    expect(output).toContain('name: Enable Corepack')
+    expect(output).toContain('run: corepack enable')
+    expect(output).not.toContain('uses: pnpm/action-setup@v4')
     expect(output).toContain('node-version: 20')
 
     expect(output).toContain('if: github.ref == \'refs/heads/main\'')
