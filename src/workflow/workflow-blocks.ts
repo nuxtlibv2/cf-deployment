@@ -70,7 +70,7 @@ export function getBuildStepsBlock(
 
   const buildCommand = packageManager === 'pnpm'
     ? 'pnpm run build'
-    : packageManager === 'yarn'
+    : packageManager === 'yarn' 
       ? 'yarn build'
       : 'npm run build'
 
@@ -79,8 +79,6 @@ export function getBuildStepsBlock(
     '        uses: actions/setup-node@v4',
     '        with:',
     `          node-version: ${nodeVersion}`,
-    `          cache: ${packageManager}`,
-    `          cache-dependency-path: ${cacheDependencyPath}`,
     '',
   ]
 

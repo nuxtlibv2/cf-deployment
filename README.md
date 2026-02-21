@@ -28,6 +28,8 @@ export default defineNuxtConfig({
 2. In Cloudflare, go to `API Tokens` -> `Create Token` -> choose `Edit Cloudflare Workers`, scope it to your account, create the token, and copy it.
 ![Get API token](assets/api_token.png)
 
+3. Before first deploy, delete any existing DNS record that matches your environment hostnames. Wrangler will try to create those records during deploy and can fail on conflicts.
+
 #### If your domain isn't registered in Clouflare yet
 Go to Cloudflare, add your domain and point nameservers to Cloudflare. Wait until the zone is `Active`.
 
@@ -211,6 +213,7 @@ Branch behavior:
 - Branch names are normalized for env keys: lowercased, non `[a-z0-9_]` characters become `_`.
 - Duplicate normalized env keys get suffixes (`main`, `main_2`, `main_3`, ...).
 - Route patterns remove scheme and trailing slash (`https://app.example.com/` -> `app.example.com`).
+- Nuxt build output must stay at `.output`; some modules override output to `dist`, which breaks this deploy flow unless you set it back to `.output`.
 
 
 ## Roadmap
@@ -218,3 +221,4 @@ Branch behavior:
 - Domain provisioning 
 - Rollback strategies
 - Improvement of internal files modularity and test coverage
+- Enforcment of output build dir
