@@ -56,12 +56,6 @@ export function getBuildStepsBlock(
   packageManager: WorkflowPackageManager,
   nodeVersion: string,
 ): string {
-  const cacheDependencyPath = packageManager === 'pnpm'
-    ? 'pnpm-lock.yaml'
-    : packageManager === 'yarn'
-      ? 'yarn.lock'
-      : 'package-lock.json'
-
   const installCommand = packageManager === 'pnpm'
     ? 'pnpm install --frozen-lockfile'
     : packageManager === 'yarn'
@@ -70,7 +64,7 @@ export function getBuildStepsBlock(
 
   const buildCommand = packageManager === 'pnpm'
     ? 'pnpm run build'
-    : packageManager === 'yarn' 
+    : packageManager === 'yarn'
       ? 'yarn build'
       : 'npm run build'
 

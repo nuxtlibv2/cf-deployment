@@ -9,7 +9,6 @@ describe('renderWorkflowYaml', () => {
     expect(output).toContain('on:\n  push:')
     expect(output).not.toContain('branches:')
     expect(output).toContain('node-version: 24')
-    expect(output).toContain('cache: npm')
     expect(output).toContain('run: npx wrangler deploy')
     expect(output).not.toContain('--env')
   })
